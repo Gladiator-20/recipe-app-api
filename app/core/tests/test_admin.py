@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.test import Client, TestCase
 
-class AdminSiteTestCase(TestCase):
+class AdminSiteTests(TestCase):
     """Tests for Django admin"""
 
     def setUp(self):
@@ -20,7 +20,7 @@ class AdminSiteTestCase(TestCase):
         self.user = get_user_model().objects.create_user(
             email='user2@example.com',
             password='userpass123',
-            name = 'Test User'
+            name='Test User'
         )
 
     def test_users_list(self):
