@@ -64,7 +64,7 @@ class ModelTests(TestCase):
             title='Sample recipe name',
             time_minutes=5,
             price=Decimal('5.50'),
-            description='Test recipe description.'
+            description='Test recipe description.',
         )
 
         self.assertEqual(str(recipe), recipe.title)
@@ -75,3 +75,13 @@ class ModelTests(TestCase):
         tag = models.Tag.objects.create(user=user, name='Tag1')
 
         self.assertEqual(str(tag), tag.name)
+
+    def test_create_ingridient(self):
+        """Test creating a ingridient is successful"""
+        user = create_user()
+        ingredient = models.Ingredient.objects.create(
+            user=user,
+            name='Place the name of ingridient here',
+        )
+
+        self.assertEqual(str(ingredient), ingredient.name)

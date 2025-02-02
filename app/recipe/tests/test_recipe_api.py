@@ -7,8 +7,10 @@ from decimal import Decimal
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import (Recipe,
-                         Tag,)
+from core.models import (
+    Recipe,
+    Tag,
+)
 from recipe.serializers import (
     RecipeSerializer, RecipeDetailSerializer
 )
@@ -137,7 +139,7 @@ class PrivateRecipeAPITests(TestCase):
         recipe=create_recipe(
             user=self.user,
             title='sample recipe title',
-            link='http://example.com/recipe.pdf',
+            link='https://example.com/recipe.pdf',
             description='Sample recipe description.',
         )
 
@@ -180,7 +182,7 @@ class PrivateRecipeAPITests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Recipe.objects.filter(id=recipe.id).exists())
 
-    def test_delete_other_users_recipe_error(self):
+    def test_recipe_other_users_recipe_error(self):
         """Test deleting a recipe successful."""
         new_user=create_user(email='exampleuser@example.com', password='examplepassword')
         recipe=create_recipe(user=new_user)
@@ -204,7 +206,7 @@ class PrivateRecipeAPITests(TestCase):
         recipes=Recipe.objects.filter(user=self.user)
         self.assertEqual(recipes.count(), 1)
         recipe=recipes[0]
-        self.assertEqual(recipe.tags.all(), 2)
+        self.assertEqual(recipe.tags.count(), 2)
         for tag in payload['tags']:
             exists=recipe.tags.filter(
                 name=tag['name'],
